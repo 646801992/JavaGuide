@@ -121,8 +121,8 @@ public class Sub extends Super {
 
 调用格式：
 
-- 类名.静态变量名
-- 类名.静态方法名()
+- `类名.静态变量名`
+- `类名.静态方法名()`
 
 如果变量或者方法被 private 则代表该属性或者该方法只能在类的内部被访问而不能在类的外部被访问。
 
@@ -132,21 +132,21 @@ public class Sub extends Super {
 public class StaticBean {
 
     String name;
-    静态变量
+    //静态变量
     static int age;
 
     public StaticBean(String name) {
         this.name = name;
     }
-    静态方法
+    //静态方法
     static void SayHello() {
-        System.out.println(Hello i am java);
+        System.out.println("Hello i am java");
     }
     @Override
     public String toString() {
-        return StaticBean{ +
-                name=' + name + ''' + age + age +
-                '}';
+        return "StaticBean{"+
+                "name=" + name + ",age=" + age +
+                "}";
     }
 }
 ```
@@ -155,14 +155,14 @@ public class StaticBean {
 public class StaticDemo {
 
     public static void main(String[] args) {
-        StaticBean staticBean = new StaticBean(1);
-        StaticBean staticBean2 = new StaticBean(2);
-        StaticBean staticBean3 = new StaticBean(3);
-        StaticBean staticBean4 = new StaticBean(4);
+        StaticBean staticBean = new StaticBean("1");
+        StaticBean staticBean2 = new StaticBean("2");
+        StaticBean staticBean3 = new StaticBean("3");
+        StaticBean staticBean4 = new StaticBean("4");
         StaticBean.age = 33;
-        StaticBean{name='1'age33} StaticBean{name='2'age33} StaticBean{name='3'age33} StaticBean{name='4'age33}
-        System.out.println(staticBean+ +staticBean2+ +staticBean3+ +staticBean4);
-        StaticBean.SayHello();Hello i am java
+        System.out.println(staticBean + " " + staticBean2 + " " + staticBean3 + " " + staticBean4);
+        //StaticBean{name=1,age=33} StaticBean{name=2,age=33} StaticBean{name=3,age=33} StaticBean{name=4,age=33}
+        StaticBean.SayHello();//Hello i am java
     }
 
 }
@@ -202,11 +202,11 @@ Example（静态内部类实现单例模式）
 ```java
 public class Singleton {
     
-    声明为 private 避免调用默认构造方法创建对象
+    //声明为 private 避免调用默认构造方法创建对象
     private Singleton() {
     }
     
-    声明为 private 表明静态内部该类只能在该 Singleton 类中被访问
+   // 声明为 private 表明静态内部该类只能在该 Singleton 类中被访问
     private static class SingletonHolder {
         private static final Singleton INSTANCE = new Singleton();
     }
@@ -230,12 +230,10 @@ public class Singleton {
 ```java
 
 
-  Math. --- 将Math中的所有静态资源导入，这时候可以直接使用里面的静态方法，而不用通过类名进行调用
-  如果只想导入单一某个静态方法，只需要将换成对应的方法名即可
+ //将Math中的所有静态资源导入，这时候可以直接使用里面的静态方法，而不用通过类名进行调用
+ //如果只想导入单一某个静态方法，只需要将换成对应的方法名即可
  
-import static java.lang.Math.;
-
-  换成import static java.lang.Math.max;具有一样的效果
+import static java.lang.Math.*;//换成import static java.lang.Math.max;具有一样的效果
  
 public class Demo {
   public static void main(String[] args) {
@@ -264,17 +262,17 @@ class Foo {
     }
 
     public static String method1() {
-       return An example string that doesn't depend on i (an instance variable);
+       return "An example string that doesn't depend on i (an instance variable)";
        
     }
 
     public int method2() {
-       return this.i + 1;  Depends on i
+       return this.i + 1;  //Depends on i
     }
 
 }
 ```
-你可以像这样调用静态方法：`Foo.method1（）`。 如果您尝试使用这种方法调用 method2 将失败。 但这样可行：`Foo bar = new Foo（1）;bar.method2（）;`
+你可以像这样调用静态方法：`Foo.method1()`。 如果您尝试使用这种方法调用 method2 将失败。 但这样可行：`Foo bar = new Foo(1);bar.method2();`
 
 总结：
 
@@ -291,44 +289,52 @@ class Foo {
 
 一般情况下,如果有些代码比如一些项目最常用的变量或对象必须在项目启动的时候就执行的时候,需要使用静态代码块,这种代码是主动执行的。如果我们想要设计不需要创建对象就可以调用类中的方法，例如：Arrays类，Character类，String类等，就需要使用静态方法, 两者的区别是 静态代码块是自动执行的而静态方法是被调用的时候才执行的. 
 
-Example
+Example：
 
 ```java
 public class Test {
     public Test() {
-        System.out.print(默认构造方法！--);
+        System.out.print("默认构造方法！--");
     }
 
-     非静态代码块
+    //非静态代码块
     {
-        System.out.print(非静态代码块！--);
-    }
-     静态代码块
-    static {
-        System.out.print(静态代码块！--);
+        System.out.print("非静态代码块！--");
     }
 
-    public static void test() {
-        System.out.print(静态方法中的内容! --);
+    //静态代码块
+    static {
+        System.out.print("静态代码块！--");
+    }
+
+    private static void test() {
+        System.out.print("静态方法中的内容! --");
         {
-            System.out.print(静态方法中的代码块！--);
+            System.out.print("静态方法中的代码块！--");
         }
 
     }
-    public static void main(String[] args) {
 
-        Test test = new Test();   
-        Test.test();静态代码块！--静态方法中的内容! --静态方法中的代码块！--
+    public static void main(String[] args) {
+        Test test = new Test();
+        Test.test();//静态代码块！--静态方法中的内容! --静态方法中的代码块！--
     }
+}
 ```
 
-当执行 `Test.test();` 时输出：
+上述代码输出：
+
+```
+静态代码块！--非静态代码块！--默认构造方法！--静态方法中的内容! --静态方法中的代码块！--
+```
+
+当只执行 `Test.test();` 时输出：
 
 ```
 静态代码块！--静态方法中的内容! --静态方法中的代码块！--
 ```
 
-当执行 `Test test = new Test();` 时输出：
+当只执行 `Test test = new Test();` 时输出：
 
 ```
 静态代码块！--非静态代码块！--默认构造方法！--
